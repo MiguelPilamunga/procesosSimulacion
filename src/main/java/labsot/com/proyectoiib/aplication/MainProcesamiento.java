@@ -37,6 +37,6 @@ public class MainProcesamiento {
         }
 
         // Imprimir información del proceso al finalizar
-        System.out.println("\nProceso " + proceso.getNumeroProceso() + " completado.");
+        System.out.println("\nProceso " + proceso.getNumeroProceso() + " completado1.");
     }
 }
