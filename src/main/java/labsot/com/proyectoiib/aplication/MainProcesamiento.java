@@ -1,42 +1,36 @@
 package labsot.com.proyectoiib.aplication;
 
 import labsot.com.proyectoiib.domain.Proceso;
+import labsot.com.proyectoiib.infrastructure.inputport.ColaInputPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 public class MainProcesamiento {
 
     public static void main(String[] args) {
-        ColaConMapa cola = new ColaConMapa();
-        cola.crearProcesos(10);
+        // Crear una instancia de ColaInputPort (puede ser ColaService)
 
-        int tiempoTotal = cola.devolverTiempoFinal();
+        ColaInputPort colaInputPort = new ColaService();
 
-        // Procesar cada proceso y mostrar tiempo simulado
-        for (int i = 1; i <= 10; i++) {
-            Proceso proceso = cola.obtenerProcesoPorNumero(i);
-            procesarProceso(proceso, tiempoTotal);
-        }
+        // Crear una cola con un número específico de procesos
+        int numeroProcesos = 5;
+        colaInputPort.crearCola(numeroProcesos);
+
+        // Obtener el número de procesos en la cola
+        int numProcesosEnCola = colaInputPort.devolverNumeroProcesos();
+        System.out.println("Número de procesos en la cola: " + numProcesosEnCola);
+
+        // Obtener el tiempo total de la cola
+        int tiempoTotal = colaInputPort.devolverTiempoTotal();
+        System.out.println("Tiempo total de la cola: " + tiempoTotal);
+
+        // Obtener una lista de procesos
+
     }
 
-    private static void procesarProceso(Proceso proceso, int tiempoTotal) {
-        int porcentajeInicial = (int) ((proceso.getTiempoLlegada() / (double) tiempoTotal) * 100);
-        int porcentajeFinal = (int) ((proceso.getTiempoFinal() / (double) tiempoTotal) * 100);
-
-        System.out.println("Procesando Proceso " + proceso.getNumeroProceso() + "...");
-        for (int tiempoActual = porcentajeInicial; tiempoActual <= porcentajeFinal; tiempoActual++) {
-            // Simulación de procesamiento: espera 100 milisegundos por cada unidad de tiempo
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            // Imprimir tiempo actual y porcentaje total del proceso actual
-            System.out.printf("\rProceso %d - Tiempo actual: %d%%", proceso.getNumeroProceso(), tiempoActual);
-        }
-
-        // Imprimir información del proceso al finalizar
-        System.out.println("\nProceso " + proceso.getNumeroProceso() + " completado1.");
-    }
 }

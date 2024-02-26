@@ -1,15 +1,15 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  # MySQL service
-  mysql:
-    image: mysql:latest
-    container_name: mysql_container
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: db-procesos
-      MYSQL_USER: lmpilamunga
-      MYSQL_PASSWORD: 1234
-    ports:
-      - "3306:3306"
+  backend:
+    image: "backend:latest"
+    build:
+      dockerfile: Dockerfile-Backend-Java-Java
+    networks:
+      default:
+        aliases:
+          - "backend-ip:172.17.0.2"
+networks:
+  default:
+    external:
+      name: my-network

@@ -1,0 +1,11 @@
+# Imagen base Node.js (versión 20.11.1-alpine3.18 LTS al 14/11/2023)
+FROM node:20.11.1-alpine3.18 AS build
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia los archivos del proyecto Angular
+COPY frontProcesos .
+
+# Comando para ejecutar la aplicación
+CMD ["nginx", "-g", "daemon off;"]

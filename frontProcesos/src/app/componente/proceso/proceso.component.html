@@ -1,0 +1,101 @@
+<div class="container mx-auto mt-6">
+  <div class="text-center mb-2">
+    <h1 class="text-xl font-bold text-gray-900">🔄 Simulador de procesos 🔄</h1>
+  </div>
+
+  <form [formGroup]="myForm" role="form" aria-labelledby="process-form">
+    <div class="mb-1">
+      <label for="numProcesses" class="block mb-1 text-sm font-medium text-gray-900">Número de procesos:</label>
+      <input
+        type="number"
+        *ngIf="!showExecuteButton"
+        name="numProcesses"
+        id="numProcesses"
+        class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+        placeholder="Ingrese la cantidad de procesos"
+        required
+        formControlName="numProcesses"
+        aria-describedby="numProcessesHelp"
+      />
+    </div>
+
+    <button
+      type="button"
+      *ngIf="!showExecuteButton"
+      class="bg-blue-500 text-white font-medium py-1 px-2 rounded-full mt-1 focus:ring focus:ring-blue-300"
+      [disabled]="myForm.invalid"
+      (click)="sendMessage()"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      Crear Procesos
+    </button>
+    <button
+      type="button"
+      *ngIf="showExecuteButton"
+      class="bg-green-500 text-white font-medium py-1 px-2 rounded-full mt-1 focus:ring focus:ring-green-300"
+      (click)="executeProcesses()"
+    >
+      Ejecutar
+    </button>
+  </form>
+
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-1 p-1 mx-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400 bg-gray-100 dark:bg-gray-200">
+      <thead class="text-xs text-gray-900 uppercase dark:text-gray-500">
+      <tr>
+        <th scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Número de proceso
+        </th>
+        <th scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Ejecución
+        </th>
+        <th scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Tiempo de llegada
+        </th>
+        <th scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Tiempo de ráfaga
+        </th>
+        <th *ngIf="showExecuteButton" scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Tiempo de retorno
+        </th>
+        <th *ngIf="showExecuteButton" scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Tiempo de espera
+        </th>
+        <th *ngIf="showExecuteButton" scope="col" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 font-semibold text-gray-900">
+          Tiempo final
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let proceso of listaProcesos" class="border-b border-gray-200 dark:border-gray-300">
+        <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap">
+          {{ proceso.numeroProceso }}
+        </th>
+        <th scope="row" class="px-2 py-1">
+          <div class="bg-green-500 text-xs font-medium text-blue-900 text-center p-0.5 leading-none rounded-full transition-all m-1"
+               style="width:{{ proceso.porcentajedeEjecucion }}%;">
+            {{ proceso.porcentajedeEjecucion }}%
+          </div>
+
+        </th>
+        <td class="px-2 py-1 bg-gray-200 dark:bg-gray-300 text-gray-900 font-semibold">
+          {{ proceso.tiempoLlegada }}
+        </td>
+        <td class="px-2 py-1 bg-gray-200 dark:bg-gray-300 text-gray-900 font-semibold">
+          {{ proceso.tiempoRafaga }}
+        </td>
+        <td *ngIf="showExecuteButton" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 text-gray-900 font-semibold">
+          {{ proceso.tiempoRetorno }}
+        </td>
+        <td *ngIf="showExecuteButton" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 text-gray-900 font-semibold">
+          {{ proceso.tiempoEspera }}
+        </td>
+        <td *ngIf="showExecuteButton" class="px-2 py-1 bg-gray-200 dark:bg-gray-300 text-gray-900 font-semibold">
+          {{ proceso.tiempoFinal }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

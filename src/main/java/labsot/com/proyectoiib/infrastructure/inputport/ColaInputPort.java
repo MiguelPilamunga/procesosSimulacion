@@ -1,6 +1,10 @@
 package labsot.com.proyectoiib.infrastructure.inputport;
 
 import labsot.com.proyectoiib.domain.Proceso;
+import labsot.com.proyectoiib.infrastructure.inputadapter.http.ProcesoDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public interface ColaInputPort {
@@ -11,4 +15,6 @@ public interface ColaInputPort {
     int devolverTiempoTotal();
 
     Proceso devolverProceso(int posicion);
+
+    ArrayList<ProcesoDTO> getListaProcesos();
 }
